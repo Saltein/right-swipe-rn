@@ -1,10 +1,17 @@
-import { View, Text } from "react-native";
-import React from "react";
+import { PageWrapper, useKeyboardDidShow } from "../../shared";
+import { AuthFormSwitcher } from "../../widgets/AuthFormSwitcher/AuthFormSwitcher";
 
 export function AuthPage() {
+    const { keyboardVisible, keyboardHeight } = useKeyboardDidShow();
+
     return (
-        <View>
-            <Text>AuthPage</Text>
-        </View>
+        <PageWrapper
+            style={{
+                paddingBottom: keyboardVisible ? keyboardHeight : 0,
+                justifyContent: "center",
+            }}
+        >
+            <AuthFormSwitcher />
+        </PageWrapper>
     );
 }

@@ -11,5 +11,9 @@
         "statusBar.debuggingForeground": "#FFFAF2",
         "statusBar.noFolderBackground": "#875000",
         "statusBar.noFolderForeground": "#FFFAF2"
-    }
+    },
+    "cSpell.words": [
+        "Pressable",
+        "xxxxl"
+    ]
 }

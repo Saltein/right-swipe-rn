@@ -32,7 +32,7 @@ export function Root() {
             <StatusBar style="auto" />
             <SafeAreaView style={[s.container, { height }]}>
                 <NavigationContainer>
-                    <RootNavigator isAuth={false} /> 
+                    <RootNavigator isAuth={false} />
                 </NavigationContainer>
             </SafeAreaView>
         </>
