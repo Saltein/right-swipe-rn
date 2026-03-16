@@ -119,7 +119,7 @@ const s = StyleSheet.create({
         backgroundColor: styles.colors.backgroundSurface,
         borderColor: styles.colors.border,
         borderWidth: 1,
-        borderRadius: styles.radius.lg,
+        borderRadius: styles.radius.xxl,
         marginHorizontal: styles.spacing.md,
     },
 

@@ -29,7 +29,7 @@ export function Root() {
 
     return (
         <>
-            <StatusBar style="auto" />
+            <StatusBar style="light" />
             <SafeAreaView style={[s.container, { height }]}>
                 <NavigationContainer>
                     <RootNavigator isAuth={false} />

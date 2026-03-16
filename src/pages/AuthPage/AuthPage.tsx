@@ -1,4 +1,10 @@
-import { PageWrapper, useKeyboardDidShow } from "../../shared";
+import {
+    KeyboardAvoidingView,
+    ScrollView,
+    Platform,
+    StyleSheet,
+} from "react-native";
+import { PageWrapper, styles, useKeyboardDidShow } from "../../shared";
 import { AuthFormSwitcher } from "../../widgets/AuthFormSwitcher/AuthFormSwitcher";
 
 export function AuthPage() {
@@ -11,7 +17,24 @@ export function AuthPage() {
                 justifyContent: "center",
             }}
         >
-            <AuthFormSwitcher />
+            <ScrollView
+                contentContainerStyle={s.scrollContainer}
+                keyboardShouldPersistTaps="handled"
+            >
+                <AuthFormSwitcher />
+            </ScrollView>
         </PageWrapper>
     );
 }
+
+const s = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: styles.colors.backgroundMain,
+    },
+    scrollContainer: {
+        flexGrow: 1,
+        justifyContent: "center",
+        padding: styles.spacing.md,
+    },
+});
