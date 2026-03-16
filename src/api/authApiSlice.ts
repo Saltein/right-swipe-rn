@@ -30,28 +30,28 @@ export const authApi = createApi({
     endpoints: (builder) => ({
         sendCode: builder.mutation<SendCodeResponse, SendCodeParams>({
             query: (body) => ({
-                url: `/auth/send-code`,
+                url: `auth/send-code`,
                 method: "POST",
                 body,
             }),
         }),
         verifyCode: builder.mutation<VerifyCodeResponse, VerifyCodeParams>({
             query: (body) => ({
-                url: `/auth/verify-code`,
+                url: `auth/verify-code`,
                 method: "POST",
                 body,
             }),
         }),
         register: builder.mutation<RegisterResponse, RegisterParams>({
             query: (body) => ({
-                url: "register",
+                url: "auth/register",
                 method: "POST",
                 body,
             }),
         }),
         login: builder.mutation<LoginResponse, LoginParams>({
             query: (body) => ({
-                url: "login",
+                url: "auth/login",
                 method: "POST",
                 body,
             }),

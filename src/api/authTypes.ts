@@ -23,9 +23,9 @@ export interface RegisterParams {
     email: string;
     password: string;
     passwordCheck: string;
-    city?: string | null;
-    dateOfBirth?: string | null; // ISO строка даты "YYYY-MM-DD"
-    gender?: "M" | "F";
+    city: string;
+    dateOfBirth: string; // ISO строка даты "YYYY-MM-DD"
+    gender?: "M" | "F" | undefined;
 }
 
 export interface RegisterResponse {

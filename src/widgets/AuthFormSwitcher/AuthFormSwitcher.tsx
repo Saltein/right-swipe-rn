@@ -112,7 +112,11 @@ export function AuthFormSwitcher() {
                         {fromLogin ? (
                             <Form key="login" type="login" />
                         ) : (
-                            <Form key="register" type="register" />
+                            <Form
+                                key="register"
+                                type="register"
+                                setLoginMode={() => switchTab(true)}
+                            />
                         )}
                     </View>
                 </Animated.View>

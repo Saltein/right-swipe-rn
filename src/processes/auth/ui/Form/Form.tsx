@@ -11,14 +11,16 @@ import { useEffect, useState } from "react";
 import { Option } from "../../../../shared/ui/OptionInput/OptionInput";
 import { SendCodeButton } from "../buttons/SendCodeButton/SendCodeButton";
 import { VerifyCodeButton } from "../buttons/VerifyCodeButton/VerifyCodeButton";
+import { RegisterButton } from "../buttons/RegisterButton/RegisterButton";
 
 type FormType = "login" | "register";
 
 interface FormProps {
     type: FormType;
+    setLoginMode?: () => void;
 }
 
-export function Form({ type }: FormProps) {
+export function Form({ type, setLoginMode }: FormProps) {
     const [gender, setGender] = useState<Option | null>(null);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -34,16 +36,6 @@ export function Form({ type }: FormProps) {
     const [codeError, setCodeError] = useState("");
     const [error, setError] = useState("");
 
-    const allFieldsFilledRegister =
-        gender !== null &&
-        name !== "" &&
-        email !== "" &&
-        isCodeVerified &&
-        city !== "" &&
-        password !== "" &&
-        confirmPassword !== "" &&
-        birthDate !== null;
-
     const allFieldsFilledLogin = email !== "" && password !== "";
 
     const maxLength = 6;
@@ -55,11 +47,17 @@ export function Form({ type }: FormProps) {
 
     useEffect(() => {
         setCodeError("");
-    }, [verifyCode]);
+    }, [verifyCode, isCodeVerified, isCodeSent]);
 
     useEffect(() => {
         setError("");
     }, [gender, name, email, password, confirmPassword, birthDate, city]);
+
+    useEffect(() => {
+        setIsCodeSent(false);
+        setIsCodeVerified(false);
+        setVerifyCode("");
+    }, [email]);
 
     return (
         <View style={s.container}>
@@ -197,10 +195,38 @@ export function Form({ type }: FormProps) {
                         value={confirmPassword}
                         onChangeText={setConfirmPassword}
                     />
-                    <DefaultButton
-                        title="Зарегистрироваться"
-                        onPress={() => {}}
-                        inactive={allFieldsFilledRegister ? false : true}
+
+                    {error && (
+                        <DefaultText
+                            style={{
+                                color: styles.colors.error,
+                                alignSelf: "center",
+                            }}
+                        >
+                            {error}
+                        </DefaultText>
+                    )}
+
+                    <RegisterButton
+                        setLoginMode={setLoginMode}
+                        formData={{
+                            first_name: name,
+                            email,
+                            password,
+                            passwordCheck: confirmPassword,
+                            city,
+                            dateOfBirth:
+                                birthDate?.toLocaleDateString("sv-SE") ??
+                                new Date().toLocaleDateString("sv-SE"),
+                            gender: gender
+                                ? gender.id === 1
+                                    ? "M"
+                                    : "F"
+                                : undefined,
+                        }}
+                        isCodeVerified={isCodeVerified}
+                        confirmPassword={confirmPassword}
+                        setError={setError}
                     />
                 </>
             )}
