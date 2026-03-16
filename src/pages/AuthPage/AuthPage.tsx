@@ -1,9 +1,4 @@
-import {
-    KeyboardAvoidingView,
-    ScrollView,
-    Platform,
-    StyleSheet,
-} from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { PageWrapper, styles, useKeyboardDidShow } from "../../shared";
 import { AuthFormSwitcher } from "../../widgets/AuthFormSwitcher/AuthFormSwitcher";
 
@@ -35,6 +30,6 @@ const s = StyleSheet.create({
     scrollContainer: {
         flexGrow: 1,
         justifyContent: "center",
-        padding: styles.spacing.md,
+        paddingHorizontal: styles.spacing.md,
     },
 });

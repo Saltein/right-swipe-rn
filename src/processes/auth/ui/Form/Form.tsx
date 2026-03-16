@@ -1,14 +1,16 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import {
     DateInput,
     DefaultButton,
+    DefaultText,
     DefaultTextInput,
     OptionInput,
     styles,
 } from "../../../../shared";
-import { useState } from "react";
-import { validateEmail } from "../../../../shared/lib/validateEmail";
+import { useEffect, useState } from "react";
 import { Option } from "../../../../shared/ui/OptionInput/OptionInput";
+import { SendCodeButton } from "../buttons/SendCodeButton/SendCodeButton";
+import { VerifyCodeButton } from "../buttons/VerifyCodeButton/VerifyCodeButton";
 
 type FormType = "login" | "register";
 
@@ -27,18 +29,37 @@ export function Form({ type }: FormProps) {
     const [birthDate, setBirthDate] = useState<Date | null>(null);
 
     const [isCodeSent, setIsCodeSent] = useState(false);
+    const [isCodeVerified, setIsCodeVerified] = useState(false);
+
+    const [codeError, setCodeError] = useState("");
+    const [error, setError] = useState("");
 
     const allFieldsFilledRegister =
         gender !== null &&
         name !== "" &&
         email !== "" &&
-        verifyCode !== "" &&
+        isCodeVerified &&
         city !== "" &&
         password !== "" &&
         confirmPassword !== "" &&
         birthDate !== null;
 
     const allFieldsFilledLogin = email !== "" && password !== "";
+
+    const maxLength = 6;
+    const letterSpacing = 10;
+    const fontSize = 14;
+
+    const charWidth = fontSize;
+    const inputWidth = maxLength * charWidth + (maxLength - 1) * letterSpacing;
+
+    useEffect(() => {
+        setCodeError("");
+    }, [verifyCode]);
+
+    useEffect(() => {
+        setError("");
+    }, [gender, name, email, password, confirmPassword, birthDate, city]);
 
     return (
         <View style={s.container}>
@@ -89,18 +110,69 @@ export function Form({ type }: FormProps) {
                     <View
                         style={{ flexDirection: "row", gap: styles.spacing.md }}
                     >
-                        {isCodeSent && (
-                            <DefaultTextInput
-                                style={{ width: undefined, flex: 1 }}
-                            ></DefaultTextInput>
+                        {isCodeVerified ? (
+                            <View
+                                style={{
+                                    width: "100%",
+                                }}
+                            >
+                                <DefaultText
+                                    style={{
+                                        color: styles.colors.success,
+                                        alignSelf: "center",
+                                    }}
+                                >
+                                    Email подтвержден!
+                                </DefaultText>
+                            </View>
+                        ) : isCodeSent ? (
+                            <>
+                                <DefaultTextInput
+                                    maxLength={6}
+                                    style={[
+                                        s.input,
+                                        {
+                                            width: inputWidth,
+                                            letterSpacing: letterSpacing,
+                                        },
+                                    ]}
+                                    keyboardType="numeric"
+                                    value={verifyCode}
+                                    onChangeText={(code) => {
+                                        const numericCode = code.replace(
+                                            /[^0-9]/g,
+                                            "",
+                                        );
+                                        setVerifyCode(numericCode);
+                                    }}
+                                    placeholder="000000"
+                                ></DefaultTextInput>
+                                <VerifyCodeButton
+                                    code={verifyCode}
+                                    email={email}
+                                    setIsCodeVerified={setIsCodeVerified}
+                                    setError={setCodeError}
+                                />
+                            </>
+                        ) : (
+                            <SendCodeButton
+                                email={email}
+                                setIsCodeSent={setIsCodeSent}
+                                setError={setCodeError}
+                            />
                         )}
-                        <DefaultButton
-                            title="Получить проверочный код"
-                            onPress={() => {}}
-                            inactive={validateEmail(email) ? false : true}
-                            style={{ width: undefined, flex: 1 }}
-                        />
                     </View>
+
+                    {codeError && (
+                        <DefaultText
+                            style={{
+                                color: styles.colors.error,
+                                alignSelf: "center",
+                            }}
+                        >
+                            {codeError}
+                        </DefaultText>
+                    )}
 
                     <DateInput
                         style={s.input}

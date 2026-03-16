@@ -24,7 +24,7 @@ export const Skeleton: React.FC<SkeletonProps> = ({ style }) => {
             {
                 translateX: translateX.interpolate({
                     inputRange: [-1, 1],
-                    outputRange: [-300, 300],
+                    outputRange: [-400, 400],
                 }),
             },
         ],

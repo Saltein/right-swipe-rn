@@ -17,7 +17,7 @@ export function DefaultButton({
 }: DefaultButtonProps) {
     return (
         <Pressable
-            onPress={onPress}
+            onPress={inactive ? () => {} : onPress}
             style={[s.button, inactive && s.inactive, style]}
         >
             <DefaultText style={s.buttonText}>{title}</DefaultText>

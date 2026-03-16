@@ -11,6 +11,7 @@ import { Form } from "../../processes/auth/ui/Form/Form";
 
 export function AuthFormSwitcher() {
     const [fromLogin, setFromLogin] = useState(true);
+    const [isSwitching, setIsSwitching] = useState(false); // флаг для блокировки onLayout во время анимации
 
     const indicatorAnim = useRef(new Animated.Value(0)).current;
     const heightAnim = useRef(new Animated.Value(0)).current;
@@ -21,6 +22,7 @@ export function AuthFormSwitcher() {
     const [measured, setMeasured] = useState(false);
 
     const switchTab = (isLogin: boolean) => {
+        setIsSwitching(true);
         setFromLogin(isLogin);
 
         Animated.parallel([
@@ -34,7 +36,7 @@ export function AuthFormSwitcher() {
                 duration: 250,
                 useNativeDriver: false,
             }),
-        ]).start();
+        ]).start(() => setIsSwitching(false));
     };
 
     const indicatorLeft = indicatorAnim.interpolate({
@@ -55,6 +57,19 @@ export function AuthFormSwitcher() {
         if (loginHeight.current !== 0 && !measured) {
             heightAnim.setValue(loginHeight.current);
             setMeasured(true);
+        }
+    };
+
+    // Обработчик изменения высоты активной формы
+    const onActiveFormLayout = (e: LayoutChangeEvent) => {
+        if (isSwitching) return; // не мешаем анимации переключения
+        const newHeight = e.nativeEvent.layout.height;
+        heightAnim.setValue(newHeight);
+        // обновляем реф, чтобы при следующем переключении использовать актуальную высоту
+        if (fromLogin) {
+            loginHeight.current = newHeight;
+        } else {
+            registerHeight.current = newHeight;
         }
     };
 
@@ -92,11 +107,14 @@ export function AuthFormSwitcher() {
                         overflow: "hidden",
                     }}
                 >
-                    {fromLogin ? (
-                        <Form type="login" />
-                    ) : (
-                        <Form type="register" />
-                    )}
+                    {/* Оборачиваем форму в View с onLayout для отслеживания изменений высоты */}
+                    <View onLayout={onActiveFormLayout}>
+                        {fromLogin ? (
+                            <Form key="login" type="login" />
+                        ) : (
+                            <Form key="register" type="register" />
+                        )}
+                    </View>
                 </Animated.View>
             )}
 
@@ -152,6 +170,8 @@ const s = StyleSheet.create({
 
     hiddenMeasure: {
         position: "absolute",
+        left: 0,
+        right: 0, // занимаем всю ширину контейнера
         opacity: 0,
         pointerEvents: "none",
     },
