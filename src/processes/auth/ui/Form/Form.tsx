@@ -64,6 +64,8 @@ export function Form({ type, setLoginMode }: FormProps) {
         setVerifyCode("");
     }, [email]);
 
+    const secureEntry = true;
+
     return (
         <View style={s.container}>
             {type === "login" ? (
@@ -73,12 +75,15 @@ export function Form({ type, setLoginMode }: FormProps) {
                         placeholder="Электронная почта"
                         value={email}
                         onChangeText={setEmail}
+                        maxLength={100}
                     />
                     <DefaultTextInput
                         style={s.input}
                         placeholder="Пароль"
                         value={password}
                         onChangeText={setPassword}
+                        maxLength={50}
+                        secureTextEntry={secureEntry}
                     />
                     <DefaultButton
                         title="Войти"
@@ -102,12 +107,14 @@ export function Form({ type, setLoginMode }: FormProps) {
                         placeholder="Имя"
                         value={name}
                         onChangeText={setName}
+                        maxLength={50}
                     />
                     <DefaultTextInput
                         style={s.input}
                         placeholder="Электронная почта"
                         value={email}
                         onChangeText={setEmail}
+                        maxLength={100}
                     />
 
                     <View
@@ -207,12 +214,16 @@ export function Form({ type, setLoginMode }: FormProps) {
                         placeholder="Пароль"
                         value={password}
                         onChangeText={setPassword}
+                        maxLength={50}
+                        secureTextEntry={secureEntry}
                     />
                     <DefaultTextInput
                         style={s.input}
                         placeholder="Повторите пароль"
                         value={confirmPassword}
                         onChangeText={setConfirmPassword}
+                        maxLength={50}
+                        secureTextEntry={secureEntry}
                     />
 
                     {error && (

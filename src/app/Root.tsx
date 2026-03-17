@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { styles } from "../shared";
 import { PaperProvider } from "react-native-paper";
+import { NoticeStack } from "../features/inAppNotice/ui/NoticeStack/NoticeStack";
 
 export function Root() {
     const { height } = useWindowDimensions();
@@ -33,6 +34,7 @@ export function Root() {
             <StatusBar style="light" />
             <SafeAreaView style={[s.container, { height }]}>
                 <PaperProvider>
+                    <NoticeStack />
                     <NavigationContainer>
                         <RootNavigator isAuth={false} />
                     </NavigationContainer>

@@ -4,18 +4,28 @@ export const styles = {
         backgroundSurface: "#1e1e1e",
         backgroundItems: "#2a2a2a",
         backgroundOutsideModal: "#121212aa",
+
+        backgroundSuccess: "#1d3721",
+        backgroundError: "#341717",
+        backgroundWarning: "#31261e",
+        backgroundInfo: "#202235",
+
         border: "#2e2e2e",
+
         primary: "#A30B37",
         accent: "#facc15",
+
         text: "#f3f4f6",
         textReversed: "#111827",
         textMuted: "#9ca3af",
         textPlaceholder: "#6b7280",
+
         disabled: "#4b5563",
-        success: "#22c55e",
-        error: "#ef4444",
-        warning: "#f97316",
-        info: "#3b82f6",
+
+        success: "#95ff8b",
+        error: "#ff7474",
+        warning: "#ffcf5e",
+        info: "#8bb8ff",
     },
     radius: {
         xxs: 2,

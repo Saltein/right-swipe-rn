@@ -4,7 +4,6 @@ import { AuthFormSwitcher } from "../../widgets/AuthFormSwitcher/AuthFormSwitche
 
 export function AuthPage() {
     const { keyboardVisible, keyboardHeight } = useKeyboardDidShow();
-
     return (
         <PageWrapper
             style={{

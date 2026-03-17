@@ -4,6 +4,9 @@ import { useRegisterMutation } from "../../../../../api/authApiSlice";
 import { useEffect } from "react";
 import { RegisterParams } from "../../../../../api/authTypes";
 import { validateEmail } from "../../../../../shared/lib/validateEmail";
+import { useDispatch } from "react-redux";
+import { addNotice } from "../../../../../features/inAppNotice/model/inAppNoticeSlice";
+import { generateRandomIdString } from "../../../../../shared/lib/generateRandomIdString";
 
 interface RegisterButtonProps {
     setLoginMode?: () => void;
@@ -20,6 +23,8 @@ export function RegisterButton({
     setError,
     setLoginMode,
 }: RegisterButtonProps) {
+    const dispatch = useDispatch();
+
     const allFieldsFilledRegister =
         formData.gender !== undefined &&
         formData.first_name !== "" &&
@@ -82,6 +87,13 @@ export function RegisterButton({
         };
 
         register(cleanData);
+        dispatch(
+            addNotice({
+                id: generateRandomIdString(),
+                type: "success",
+                content: "Регистрация прошла успешно",
+            }),
+        );
 
         if (setLoginMode) {
             setLoginMode();
