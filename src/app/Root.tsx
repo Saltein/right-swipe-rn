@@ -11,6 +11,7 @@ import { RootNavigator } from "./providers/navigation/RootNavigator";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { styles } from "../shared";
+import { PaperProvider } from "react-native-paper";
 
 export function Root() {
     const { height } = useWindowDimensions();
@@ -31,9 +32,11 @@ export function Root() {
         <>
             <StatusBar style="light" />
             <SafeAreaView style={[s.container, { height }]}>
-                <NavigationContainer>
-                    <RootNavigator isAuth={false} />
-                </NavigationContainer>
+                <PaperProvider>
+                    <NavigationContainer>
+                        <RootNavigator isAuth={false} />
+                    </NavigationContainer>
+                </PaperProvider>
             </SafeAreaView>
         </>
     );

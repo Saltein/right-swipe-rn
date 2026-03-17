@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { ViewProps } from "react-native";
 import { styles } from "../../styles/styles";
 

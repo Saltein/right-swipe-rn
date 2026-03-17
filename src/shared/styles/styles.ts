@@ -3,6 +3,7 @@ export const styles = {
         backgroundMain: "#121212",
         backgroundSurface: "#1e1e1e",
         backgroundItems: "#2a2a2a",
+        backgroundOutsideModal: "#121212aa",
         border: "#2e2e2e",
         primary: "#A30B37",
         accent: "#facc15",

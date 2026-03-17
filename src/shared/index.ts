@@ -11,3 +11,5 @@ export { styles } from "./styles/styles";
 export { DefaultButton } from "./ui/DefaultButton/DefaultButton";
 export { DateInput } from "./ui/DateInput/DateInput";
 export { OptionInput } from "./ui/OptionInput/OptionInput";
+export { ModalWrapper } from "./ui/ModalWrapper/ModalWrapper";
+export { OptionFlatListInput } from "./ui/OptionFlatListInput/OptionFlatListInput";

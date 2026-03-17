@@ -1,4 +1,4 @@
-export const russianCities = [
+const russianCities = [
     {
         coords: {
             lat: "52.65",
@@ -11340,3 +11340,7 @@ export const russianCities = [
         subject: "Московская область",
     },
 ];
+
+export const cityNames = russianCities.map(
+    (city) => `${city.name}/(${city.subject})/${city.population}`,
+);

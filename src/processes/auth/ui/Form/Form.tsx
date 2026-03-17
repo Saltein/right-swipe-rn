@@ -1,9 +1,11 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Pressable, FlatList, Keyboard } from "react-native";
 import {
     DateInput,
     DefaultButton,
     DefaultText,
     DefaultTextInput,
+    ModalWrapper,
+    OptionFlatListInput,
     OptionInput,
     styles,
 } from "../../../../shared";
@@ -12,6 +14,7 @@ import { Option } from "../../../../shared/ui/OptionInput/OptionInput";
 import { SendCodeButton } from "../buttons/SendCodeButton/SendCodeButton";
 import { VerifyCodeButton } from "../buttons/VerifyCodeButton/VerifyCodeButton";
 import { RegisterButton } from "../buttons/RegisterButton/RegisterButton";
+import { cityNames } from "../../../../shared/consts/russianCities";
 
 type FormType = "login" | "register";
 
@@ -35,6 +38,8 @@ export function Form({ type, setLoginMode }: FormProps) {
 
     const [codeError, setCodeError] = useState("");
     const [error, setError] = useState("");
+
+    const [showModal, setShowModal] = useState(false);
 
     const allFieldsFilledLogin = email !== "" && password !== "";
 
@@ -177,12 +182,26 @@ export function Form({ type, setLoginMode }: FormProps) {
                         value={birthDate}
                         onChange={setBirthDate}
                     />
-                    <DefaultTextInput
+                    <Pressable
                         style={s.input}
-                        placeholder="Город"
-                        value={city}
-                        onChangeText={setCity}
-                    />
+                        onPress={() => {
+                            setShowModal(true);
+                            Keyboard.dismiss();
+                        }}
+                    >
+                        <DefaultText
+                            style={{
+                                height: styles.heights.inputsAndButtons,
+                                textAlignVertical: "center",
+                                paddingHorizontal: styles.spacing.lg,
+                                color: city
+                                    ? styles.colors.text
+                                    : styles.colors.textPlaceholder,
+                            }}
+                        >
+                            {city ? city : "Город"}
+                        </DefaultText>
+                    </Pressable>
                     <DefaultTextInput
                         style={s.input}
                         placeholder="Пароль"
@@ -229,6 +248,20 @@ export function Form({ type, setLoginMode }: FormProps) {
                         setError={setError}
                     />
                 </>
+            )}
+            {showModal && (
+                <ModalWrapper
+                    style={{ width: "90%", height: 400 }}
+                    onClose={() => setShowModal(false)}
+                >
+                    <OptionFlatListInput
+                        title="Выберите свой город"
+                        setOption={setCity}
+                        setShowModal={setShowModal}
+                        searchable
+                        list={cityNames}
+                    />
+                </ModalWrapper>
             )}
         </View>
     );
