@@ -26,7 +26,6 @@ export function RegisterButton({
     const dispatch = useDispatch();
 
     const allFieldsFilledRegister =
-        formData.gender !== undefined &&
         formData.first_name !== "" &&
         formData.email !== "" &&
         confirmPassword !== "" &&
@@ -40,6 +39,10 @@ export function RegisterButton({
     function handleRegister() {
         if (!allFieldsFilledRegister) {
             setError("Заполните все поля");
+            return;
+        }
+        if (formData.gender === undefined) {
+            setError("Укажите пол");
             return;
         }
         if (formData.first_name.trim().length < 2) {
