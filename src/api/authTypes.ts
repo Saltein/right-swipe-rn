@@ -42,6 +42,24 @@ export interface LoginResponse {
     token: string;
 }
 
+// authMe
+export interface AuthMeResponse {
+    user: {
+        id: number;
+        email: string;
+        first_name: string;
+        city: string | null;
+        birth_date: string | null;
+        gender: string | null;
+        verified: boolean;
+    };
+}
+
+// logout
+export interface LogoutResponse {
+    message: string;
+}
+
 // errors
 export interface ErrorResponse {
     error: string;

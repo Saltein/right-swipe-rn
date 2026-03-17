@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { authApi } from "../api/authApiSlice";
+import { authApi, tokenTriggerReducer } from "../api/authApiSlice";
 import inAppNoticeReducer from "../features/inAppNotice/model/inAppNoticeSlice";
 
 export const store = configureStore({
     reducer: {
+        tokenTrigger: tokenTriggerReducer,
         inAppNotice: inAppNoticeReducer,
         [authApi.reducerPath]: authApi.reducer,
     },

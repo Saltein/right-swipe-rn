@@ -7,16 +7,7 @@ interface InitialStateType {
 }
 
 const initialState: InitialStateType = {
-    queueStack: [
-        { id: "1", type: "info", content: "test notice 1" },
-        { id: "2", type: "error", content: "test notice 2" },
-        { id: "3", type: "warning", content: "test notice 3" },
-        { id: "4", type: "success", content: "test notice 4" },
-        { id: "5", type: "info", content: "test notice 5" },
-        { id: "6", type: "info", content: "test notice 6" },
-        { id: "7", type: "info", content: "test notice 7" },
-        { id: "8", type: "info", content: "test notice 8" },
-    ],
+    queueStack: [],
 };
 
 const inAppNoticeSlice = createSlice({

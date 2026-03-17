@@ -13,21 +13,23 @@ import { useSelector } from "react-redux";
 import { styles } from "../shared";
 import { PaperProvider } from "react-native-paper";
 import { NoticeStack } from "../features/inAppNotice/ui/NoticeStack/NoticeStack";
+import { selectTokenTrigger, useGetMeMutation } from "../api/authApiSlice";
+import { AuthLoadingPage } from "../pages/AuthLoadingPage/AuthLoadingPage";
 
 export function Root() {
     const { height } = useWindowDimensions();
-    // const [getMe, { data, isLoading }] = useGetMeMutation();
-    // const tokenTrigger = useSelector(selectTokenTrigger);
+    const [getMe, { data, isLoading }] = useGetMeMutation();
+    const tokenTrigger = useSelector(selectTokenTrigger);
 
-    // useEffect(() => {
-    //     getMe();
-    // }, [tokenTrigger]);
+    useEffect(() => {
+        getMe();
+    }, [tokenTrigger]);
 
-    // if (isLoading) {
-    //     // return <AuthLoadingScreen />;
-    // }
+    if (isLoading) {
+        return <AuthLoadingPage />;
+    }
 
-    // const isAuth = !!data;
+    const isAuth = !!data;
 
     return (
         <>
@@ -36,7 +38,7 @@ export function Root() {
                 <PaperProvider>
                     <NoticeStack />
                     <NavigationContainer>
-                        <RootNavigator isAuth={false} />
+                        <RootNavigator isAuth={isAuth} />
                     </NavigationContainer>
                 </PaperProvider>
             </SafeAreaView>

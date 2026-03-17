@@ -54,6 +54,10 @@ export function RegisterButton({
             setError("Пароль должен содержать минимум 8 символов");
             return;
         }
+        if (formData.password.includes(" ")) {
+            setError("Пароль не должен содержать пробелы");
+            return;
+        }
         if (confirmPassword !== formData.password) {
             setError("Пароли не совпадают");
             return;
@@ -87,21 +91,21 @@ export function RegisterButton({
         };
 
         register(cleanData);
-        dispatch(
-            addNotice({
-                id: generateRandomIdString(),
-                type: "success",
-                content: "Регистрация прошла успешно",
-            }),
-        );
-
-        if (setLoginMode) {
-            setLoginMode();
-        }
     }
 
     useEffect(() => {
         if (isSuccess) {
+            dispatch(
+                addNotice({
+                    id: generateRandomIdString(),
+                    type: "success",
+                    content: "Регистрация прошла успешно",
+                }),
+            );
+
+            if (setLoginMode) {
+                setLoginMode();
+            }
         }
         if (isError) {
             console.log("error", error);

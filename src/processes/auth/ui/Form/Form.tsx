@@ -1,7 +1,6 @@
-import { View, StyleSheet, Pressable, FlatList, Keyboard } from "react-native";
+import { View, StyleSheet, Pressable, Keyboard } from "react-native";
 import {
     DateInput,
-    DefaultButton,
     DefaultText,
     DefaultTextInput,
     ModalWrapper,
@@ -15,6 +14,7 @@ import { SendCodeButton } from "../buttons/SendCodeButton/SendCodeButton";
 import { VerifyCodeButton } from "../buttons/VerifyCodeButton/VerifyCodeButton";
 import { RegisterButton } from "../buttons/RegisterButton/RegisterButton";
 import { cityNames } from "../../../../shared/consts/russianCities";
+import { LoginButton } from "../buttons/LoginButton/LoginButton";
 
 type FormType = "login" | "register";
 
@@ -40,8 +40,6 @@ export function Form({ type, setLoginMode }: FormProps) {
     const [error, setError] = useState("");
 
     const [showModal, setShowModal] = useState(false);
-
-    const allFieldsFilledLogin = email !== "" && password !== "";
 
     const maxLength = 6;
     const letterSpacing = 10;
@@ -76,6 +74,9 @@ export function Form({ type, setLoginMode }: FormProps) {
                         value={email}
                         onChangeText={setEmail}
                         maxLength={100}
+                        autoCorrect={false}
+                        spellCheck={false}
+                        autoCapitalize="none"
                     />
                     <DefaultTextInput
                         style={s.input}
@@ -84,11 +85,23 @@ export function Form({ type, setLoginMode }: FormProps) {
                         onChangeText={setPassword}
                         maxLength={50}
                         secureTextEntry={secureEntry}
+                        autoCorrect={false}
+                        spellCheck={false}
+                        autoCapitalize="none"
                     />
-                    <DefaultButton
-                        title="Войти"
-                        onPress={() => {}}
-                        inactive={allFieldsFilledLogin ? false : true}
+                    {error && (
+                        <DefaultText
+                            style={{
+                                color: styles.colors.error,
+                                alignSelf: "center",
+                            }}
+                        >
+                            {error}
+                        </DefaultText>
+                    )}
+                    <LoginButton
+                        formData={{ email, password }}
+                        setError={setError}
                     />
                 </>
             ) : (
@@ -108,6 +121,8 @@ export function Form({ type, setLoginMode }: FormProps) {
                         value={name}
                         onChangeText={setName}
                         maxLength={50}
+                        autoCorrect={false}
+                        spellCheck={false}
                     />
                     <DefaultTextInput
                         style={s.input}
@@ -115,6 +130,9 @@ export function Form({ type, setLoginMode }: FormProps) {
                         value={email}
                         onChangeText={setEmail}
                         maxLength={100}
+                        autoCorrect={false}
+                        spellCheck={false}
+                        autoCapitalize="none"
                     />
 
                     <View
@@ -216,6 +234,9 @@ export function Form({ type, setLoginMode }: FormProps) {
                         onChangeText={setPassword}
                         maxLength={50}
                         secureTextEntry={secureEntry}
+                        autoCorrect={false}
+                        spellCheck={false}
+                        autoCapitalize="none"
                     />
                     <DefaultTextInput
                         style={s.input}
@@ -224,6 +245,9 @@ export function Form({ type, setLoginMode }: FormProps) {
                         onChangeText={setConfirmPassword}
                         maxLength={50}
                         secureTextEntry={secureEntry}
+                        autoCorrect={false}
+                        spellCheck={false}
+                        autoCapitalize="none"
                     />
 
                     {error && (
